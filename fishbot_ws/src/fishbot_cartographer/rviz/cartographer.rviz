@@ -1,0 +1,120 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+      Splitter Ratio: 0.5
+    Tree Height: 487
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Name: Grid
+    - Alpha: 1
+      Class: rviz_default_plugins/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: FlatColor
+      Decay Time: 0
+      Enabled: true
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Size (m): 0.1
+      Size Transformer: FlatColor
+      Topic:
+        Depth: 1
+        Duration: 0.15
+        Filter size: 10
+        Value: /scan
+    - Alpha: 1
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 1
+        Duration: 0.15
+        Filter size: 10
+        Value: /map
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Description Source: URDF from topic
+      Description Topic:
+        Depth: 1
+        Duration: 0.15
+        Filter size: 10
+        Value: /robot_description
+      Enabled: true
+      Name: RobotModel
+    - Alpha: 1
+      Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        map:
+          map:
+            {}
+        odom:
+          {}
+        base_link:
+          {}
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+    - Class: rviz_default_plugins/NavGoal
+      Single Goal: true
+    - Class: rviz_default_plugins/NavPose
+      Single Pose: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 10
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Name: Current View
+      Pitch: 0
+      Yaw: 0
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 800
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Image:
+    collapsed: false
+  Left Dock Width: 121
+  Main Window:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000100000000000001a4000002d8fc0200000007fb0000001200530068006f007700200054006f006f006c00730000000000ffffffff0000000000000000
+  Right Dock Width: 232
+  Toolbars:
+    collapsed: false
+  Width: 1200

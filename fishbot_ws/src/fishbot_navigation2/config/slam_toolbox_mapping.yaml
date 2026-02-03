@@ -1,0 +1,50 @@
+# slam_toolbox_mapping.yaml
+slam_toolbox:
+  ros__parameters:
+    # 建图模式
+    mode: mapping  # 关键：改为 mapping 模式
+
+    # 坐标系
+    odom_frame: odom
+    map_frame: map
+    base_frame: base_link
+    scan_topic: scan
+
+    # Solver 配置
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+
+    # 扫描处理
+    throttle_scans: 1
+    scan_queue_size: 10
+    use_scan_matching: true
+    use_scan_barycenter: true
+    minimum_travel_distance: 0.1
+    minimum_travel_heading: 0.1
+    scan_buffer_size: 30  # 建图时需要更大的缓冲区
+
+    # 回环检测（建图时需要开启）
+    do_loop_closing: true
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_coarse: 3.0
+    loop_match_minimum_response_coarse: 0.35
+    loop_match_minimum_response_fine: 0.45
+
+    # 参数与之前类似，保持建图优化参数...
+    correlation_search_space_dimension: 0.5
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.1
+
+    # 建图输出参数
+    map_update_interval: 5.0  # 每5秒更新一次地图
+    resolution: 0.05
+    min_laser_range: 0.05
+    max_laser_range: 64.0
+
+    # 其他通用参数
+    transform_publish_period: 0.02
+    minimum_time_interval: 0.1
+    transform_timeout: 0.1
+    tf_buffer_duration: 30.
+    stack_size_to_use: 40000000

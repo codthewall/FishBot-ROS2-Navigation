@@ -1,0 +1,73 @@
+gicp_relocalizer:
+  ros__parameters:
+    global_frame: "map"
+    odom_frame: "odom"
+    base_frame: "base_link"
+    laser_frame: "laser_link"
+    scan_topic: "/scan"
+    map_topic: "/map"
+    
+    # 新：是否使用新的 /relocalize 服务（推荐：true）
+    # true: 使用新的 relocalize 服务，直接更新位姿，无需重启轨迹
+    # false: 使用传统方法（重启轨迹），不推荐
+    use_relocalize_service: true
+    
+    icp:
+      max_correspondence_distance: 1.5   # 增大以容忍更大误差
+      maximum_iterations: 50
+      transformation_epsilon: 0.0001
+      euclidean_fitness_epsilon: 0.001
+    
+    init_search:
+      radius: 10.0         # 增大搜索范围（米）
+      resolution: 0.5      # 搜索步长（米）
+      # 关键修改：增加角度采样密度，从16个增加到32个方向（11.25度间隔）
+      angles: [-3.14, -2.83, -2.51, -2.20, -1.88, -1.57, -1.26, -0.94, -0.63, -0.31, 0.0,
+               0.31, 0.63, 0.94, 1.26, 1.57, 1.88, 2.20, 2.51, 2.83, 3.14,  # 完整圆周
+               -3.14, -2.98, 2.98, 3.14]  # 边界重复采样提高精度
+    
+    loop_closure:
+      enabled: true
+      min_travel_distance: 2.0      # 增大：每移动2米才检查
+      min_time_seconds: 15.0        # 增大：每15秒最多检查一次
+      fitness_threshold: 0.05
+      pose_diff_threshold: 0.8      # 关键增大：只有偏移>0.8米才触发重定位
+    
+    voxel_leaf_size: 0.05
+    
+    cartographer_config_dir: "/home/syf/chapt9/fishbot_ws/src/fishbot_navigation2/config"
+    cartographer_config_basename: "fishbot_2d_localization.lua"
+    
+    # 新：分层 SAC-IA 粗定位参数（推荐：true）
+    # true: 使用分层 SAC-IA + GICP（快速，~0.5-1秒）
+    # false: 使用传统网格搜索 + ICP（慢，~2-5分钟）
+    use_hierarchical_sacia: true
+    sacia:
+      fitness_threshold: 0.10   # SAC-IA 得分阈值
+
+      # 粗定位参数
+      coarse_leaf_size: 0.15      # 粗定位体素大小（米）
+      coarse_fpfh_radius: 0.12    # FPFH计算半径（米）
+      coarse_num_samples: 50      # 采样点数（增加以获得更好的覆盖）
+      coarse_max_iterations: 500
+      coarse_correspondence_dist: 2.0
+      coarse_min_sample_dist: 0.20
+
+      # 中等精度参数
+      medium_leaf_size: 0.08
+      medium_fpfh_radius: 0.12
+      medium_num_samples: 50      # 增加采样点
+      medium_max_iterations: 500
+      medium_correspondence_dist: 1.0
+
+      # 关键修改：启用旋转精细化
+      fine_correspondence_dist: 0.15  # 减小对应距离提高精度
+      fine_max_iterations: 300        # 增加迭代次数
+      fine_transformation_eps: 1e-9   # 提高收敛精度
+      fine_euclidean_eps: 1e-8
+
+      # 通用参数
+      top_k_candidates: 12         # 增加候选数量
+      use_gicp_fine: true
+      enable_rotation_refinement: true  # 关键：启用旋转精细化
+      use_pca_rotation_estimation: true  # 使用PCA辅助旋转估计
